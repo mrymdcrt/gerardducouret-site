@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact – Gérard Ducouret</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      background-color: #111;
+      color: white;
+      font-family: 'Cinzel', serif;
+      padding: 2rem;
+      animation: fadeIn 1.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 0.5rem;
+      color: #88732d;
+    }
+
+    p.intro {
+      text-align: center;
+      max-width: 600px;
+      margin: auto;
+      margin-bottom: 2rem;
+      color: #ccc;
+      font-size: 1.1rem;
+    }
+
+    form {
+      max-width: 600px;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      background-color: rgba(255, 255, 255, 0.03);
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(255,255,255,0.05);
+      animation: fadeIn 2s ease;
+    }
+
+    input, textarea {
+      padding: 1rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 10px;
+      transition: box-shadow 0.3s ease, background-color 0.3s ease;
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+      box-shadow: 0 0 10px #88732d;
+      background-color: #1a1a1a;
+      color: #fff;
+    }
+
+    input[type="submit"] {
+      background-color: #88732d;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #a08845;
+      transform: scale(1.02);
+    }
+
+    label {
+      font-weight: bold;
+      margin-top: 1rem;
+      color: #f0e6d2;
+    }
+
+    #success-message {
+      max-width: 600px;
+      margin: 2rem auto;
+      background-color: #1c1c1c;
+      color: #aaffaa;
+      padding: 1rem 2rem;
+      border-left: 5px solid #3c6;
+      border-radius: 10px;
+      display: none;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Contact</h1>
+  <p class="intro">N'hésitez pas à me contacter !</p>
+
+  <div id="success-message">✅ Merci ! Votre message a bien été envoyé.</div>
+
+  <form id="contact-form" action="https://formspree.io/f/xkgrdavz" method="POST">
+    <label for="name">Nom :</label>
+    <input type="text" id="name" name="Nom" required placeholder="Votre nom">
+
+    <label for="email">Email :</label>
+    <input type="email" id="email" name="Email" required placeholder="votre@email.com">
+
+    <label for="message">Message :</label>
+    <textarea id="message" name="Message" rows="6" required placeholder="Votre message..."></textarea>
+
+    <input type="submit" value="Envoyer">
+  </form>
+
+  <script>
+    const form = document.getElementById("contact-form");
+    const successMessage = document.getElementById("success-message");
+
+    form.addEventListener("submit", async function(e) {
+      e.preventDefault();
+      const data = new FormData(form);
+      const response = await fetch(form.action, {
+        method: "POST",
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (response.ok) {
+        successMessage.style.display = "block";
+        form.reset();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        alert("Une erreur est survenue. Veuillez réessayer.");
+      }
+    });
+  </script>
+</body>
+</html>
